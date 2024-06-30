@@ -6,17 +6,21 @@ const DataTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    axios.get('https://api.github.com/users')
-      .then(response => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
+  const fetchdata = () => {
+  axios.get('https://api.github.com/users')
+  .then(response => {
+      setData(response.data);
+      setLoading(false);
+    })
+    .catch(error => {
         console.error('Error fetching data:', error);
         setError('Failed to load data. Please try again later.');
         setLoading(false);
-      });
+    });
+  }
+  
+  useEffect(() => {
+    fetchdata();
   }, []);
 
   if (loading) {
@@ -36,6 +40,9 @@ const DataTable = () => {
   }
 
   return (
+    <>
+
+
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
@@ -60,6 +67,7 @@ const DataTable = () => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 
